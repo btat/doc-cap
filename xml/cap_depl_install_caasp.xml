@@ -40,9 +40,94 @@
    hosts.
   </para>
  </note>
- <sect1 xml:id="sec-cap-prereqs-prod">
+ <!-- TODO
+https://github.com/SUSE/doc-cap/issues/515
+https://github.com/SUSE/doc-cap/issues/599
+https://github.com/SUSE/doc-cap/issues/608
+ TODO END -->
+ <sect1 xml:id="sec-cap-prereqs-caasp">
   <title>Prerequisites</title>
 
+  <para>
+   The following are required to deploy and use &productname; on &caasp;:
+  </para>
+
+  <itemizedlist>
+	   <!--
+	   skuba
+swap accounting enabled
+	   --> 
+   <listitem>
+    <para>
+     TODO
+    </para>
+   </listitem>
+   <listitem>
+    <!-- para -->
+    &kernel-prereq;
+   </listitem>
+
+   <!-- listitems: Install steps and links -->
+   &cfcli-prereq;
+   &kubectl-prereq;
+   &jq-prereq;
+   &curl-prereq;
+   &sed-prereq;
+  </itemizedlist>
+ </sect1>
+
+ <sect1 xml:id="sec-cap-create-caasp-cluster">
+  <title>Creating a &caasp; Cluster</title>
+ </sect1>
+
+ <sect1 xml:id="sec-cap-caasp-kubeconfig">
+  <title>TODO</title>
+ </sect1>
+
+ <!-- sect1 for helm client and tiller installation -->
+ &install-helm-tiller;
+
+ <sect1 xml:id="sec-cap-caasp-swap-accounting">
+  <title>TODO</title>
+ </sect1>
+
+ <sect1 xml:id="sec-cap-caasp-storage">
+  <title>TODO</title>
+ </sect1>
+
+ <sect1 xml:id="sec-cap-caasp-dns">
+  <title>TODO</title>
+ </sect1>
+
+ <sect1 xml:id="sec-cap-caasp-config">
+  <title>Deployment Configuration</title>
+ </sect1>
+
+ <sect1 xml:id="sec-cap-addrepo-caasp">
+  <title>Add the &kube; charts repository</title>
+ </sect1>
+
+ <sect1 xml:id="sec-cap-on-caasp">
+  <title>Deploying &productname;</title>
+
+  <sect2 xml:id="sec-cap-caasp-deploy-uaa">
+   <title>Deploy <literal>uaa</literal></title>
+  </sect2>
+
+  <sect2 xml:id="sec-cap-caasp-deploy-scf">
+   <title>Deploy <literal>scf</literal></title>
+  </sect2>
+ </sect1>
+
+ <!-- Use existing -->
+ <sect1 xml:id="sec-cap-caasp-add-capacity2">
+  <title>TODO</title>
+ </sect1>
+
+ <!-- maybe
+  PV resizing
+ -->
+<!-- OLD C3
   <para>
    Calculating hardware requirements is best done with an analysis of your
    expected workloads, traffic patterns, storage needs, and application
@@ -124,7 +209,9 @@
      <para>
       &productname; is supported on &suse; &caasp; 3.x.
      </para>
+OLD C3 -->
      <!-- para -->
+<!-- OLD C3
      &kernel-prereq;
      <para>
       After installing
@@ -197,7 +284,7 @@
       After installation, run this command to verify that it is installed, and
       that is communicating correctly with your cluster:
      </para>
-<screen>&prompt.user;kubectl version --short
+<screen>&prompt.user;kubectl version \-\-short
 Client Version: v1.10.7
 Server Version: v1.10.11</screen>
      <para>
@@ -262,7 +349,7 @@ d028551.example.com   Ready    &lt;none>    4h   v1.10.11
       PATH on your workstation, such as your <filename>~/bin</filename>
       directory. Then initialize the client only:
      </para>
-<screen>&prompt.user;helm init --client-only
+<screen>&prompt.user;helm init \-\-client-only
 Creating /home/&exampleuser_plain;/.helm
 Creating /home/&exampleuser_plain;/.helm/repository
 Creating /home/&exampleuser_plain;/.helm/repository/cache
@@ -282,6 +369,8 @@ Happy Helming!</screen>
 
   &min-deploy-note;
  </sect1>
+OLD C3 -->
+<!-- OLD C3
  <sect1 xml:id="sec-cap-psps">
   <title>Pod Security Policy</title>
 
@@ -317,6 +406,8 @@ Happy Helming!</screen>
    releases.
   </para>
  </sect1>
+OLD C3 -->
+<!-- OLD C3
  <sect1 xml:id="sec-cap-storageclass-prod">
   <title>Choose Storage Class</title>
 
@@ -373,7 +464,7 @@ persistent (default)   nfs           10d
    <replaceable>storageClassName</replaceable>:
   </para>
 
-<screen>---
+<screen>-\-\-
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
@@ -390,7 +481,7 @@ spec:
    Create your persistent volume claim:
   </para>
 
-<screen>&prompt.user;kubectl create --filename test-storage-class.yaml
+<screen>&prompt.user;kubectl create -\-filename test-storage-class.yaml
 persistentvolumeclaim "test-sc-persistent" created</screen>
 
   <para>
@@ -419,11 +510,12 @@ persistentvolumeclaim "test-sc-persistent" deleted</screen>
   <para>
    If something goes wrong and your volume claims get stuck in
    <literal>pending</literal> status, you can force deletion with the
-   <command>--grace-period=0</command> option:
+   <command>-\-grace-period=0</command> option:
   </para>
 
-<screen>&prompt.user;kubectl delete pvc/test-sc-persistent --grace-period=0</screen>
+<screen>&prompt.user;kubectl delete pvc/test-sc-persistent -\-grace-period=0</screen>
  </sect1>
+OLD C3 -->
  <sect1 xml:id="sec-cap-configure-prod">
   <title>Configure the &productname; Production Deployment</title>
 
@@ -710,7 +802,7 @@ sed's/"namespace": "default"/"namespace": "scf"/' | kubectl create --filename -<
    <step>
     <para>
      Add additional nodes to your &susecaaspreg; cluster as described in
-     <link xlink:href="https://documentation.suse.com/suse-caasp/3/html/caasp-admin/cha-admin.html#sec-admin-nodes-add"/>.
+     <link xlink:href="https://documentation.suse.com/suse-caasp/4/html/caasp-admin/_cluster_management.html#adding_nodes"/>.
     </para>
    </step>
    <step>
